@@ -1,1 +1,1 @@
-# MY WIKI
+# MyWiki Project
