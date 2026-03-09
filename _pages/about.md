@@ -1,21 +1,8 @@
 ---
-layout: about
+layout: page
 title: 首页
 permalink: /
-subtitle: MyWiki 首页
-
-profile:
-  align: right
-  image_circular: false
-
-selected_papers: false
-social: false
-
-announcements:
-  enabled: false
-
-latest_posts:
-  enabled: false
+description: MyWiki 首页
 ---
 
 欢迎来到 MyWiki。
