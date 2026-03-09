@@ -3,6 +3,8 @@ layout: page
 title: 首页
 permalink: /
 description: MyWiki 首页
+nav: true
+nav_order: 1
 ---
 
 欢迎来到 MyWiki。

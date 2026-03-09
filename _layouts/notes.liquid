@@ -1,0 +1,66 @@
+---
+layout: default
+---
+{% assign notes_by_cat = site.notes | group_by: "category" | sort: "name" %}
+<div class="row">
+    <!-- 左侧：笔记分类菜单 -->
+    <aside class="col-md-3 mb-4">
+      <nav class="list-group notes-categories" id="notes-categories">
+        <div class="h5 mb-3">分类</div>
+        {% for group in notes_by_cat %}
+          <a class="list-group-item list-group-item-action notes-cat-link {% if forloop.first %}active{% endif %}"
+             href="#"
+             data-category-index="{{ forloop.index0 }}">
+            {{ group.name }}
+            <span class="badge badge-secondary float-right">{{ group.items | size }}</span>
+          </a>
+        {% endfor %}
+        {% if notes_by_cat.size == 0 %}
+          <p class="text-muted">暂无分类，在 <code>_notes</code> 下添加笔记并设置 <code>category</code> 即可。</p>
+        {% endif %}
+      </nav>
+    </aside>
+    <!-- 右侧：当前分类下的文章列表 -->
+    <main class="col-md-9">
+      {% for group in notes_by_cat %}
+        <section class="notes-list-cat mb-4 {% unless forloop.first %}d-none{% endunless %}"
+                 id="cat-{{ forloop.index0 }}"
+                 data-category-index="{{ forloop.index0 }}">
+          <h2 class="h4 mb-3">{{ group.name }}</h2>
+          <ul class="list-unstyled">
+            {% assign sorted_notes = group.items | sort: "date" | reverse %}
+            {% for note in sorted_notes %}
+              <li class="mb-2">
+                <a href="{{ note.url | relative_url }}">{{ note.title }}</a>
+                {% if note.date %}
+                  <small class="text-muted"> — {{ note.date | date: "%Y-%m-%d" }}</small>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endfor %}
+      {% if notes_by_cat.size == 0 %}
+        <p class="text-muted">暂无笔记。</p>
+      {% endif %}
+    </main>
+</div>
+
+<script>
+(function() {
+  var links = document.querySelectorAll('.notes-cat-link');
+  var sections = document.querySelectorAll('.notes-list-cat');
+  if (links.length === 0) return;
+  links.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var idx = this.getAttribute('data-category-index');
+      links.forEach(function(l) { l.classList.remove('active'); });
+      this.classList.add('active');
+      sections.forEach(function(s) {
+        s.classList.toggle('d-none', s.getAttribute('data-category-index') !== idx);
+      });
+    });
+  });
+})();
+</script>

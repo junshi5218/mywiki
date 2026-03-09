@@ -154,6 +154,9 @@ newsletter:
 collections:
   projects:
     output: true
+  notes:
+    output: true
+    permalink: /notes/:name/
 
 # -----------------------------------------------------------------------------
 # Jekyll settings
@@ -173,7 +176,7 @@ kramdown:
       start_line: 1
 
 # Includes & excludes
-include: ["_pages"]
+include: ["_pages", "_notes"]
 exclude:
   - bin/
   - CONTRIBUTING.md
@@ -213,6 +216,11 @@ defaults:
       path: "assets"
     values:
       sitemap: false
+  - scope:
+      path: ""
+      type: "notes"
+    values:
+      layout: page
 
 sass:
   style: compressed
